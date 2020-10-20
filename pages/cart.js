@@ -139,14 +139,13 @@ const Cart = ({ error, products }) => {
   };
 
   const TotalPrice = () => {
-    console.log("length: ", products.length);
     return (
       <div
         className="container"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
         <h5>Total Rp. {price}</h5>
-        {products.length != 0 && (
+        {cProducts.length != 0 && (
           <button
             onClick={() => {
               let token = handleCheckout2();
