@@ -70,7 +70,7 @@ const Cart = ({ error, products }) => {
               <div style={{ marginLeft: "20px" }}>
                 <h6>{item.product.name}</h6>
                 <h6>
-                  {item.quantity} x ₹ {item.product.price}
+                  {item.quantity} x Rp. {item.product.price}
                 </h6>
                 <button
                   className="btn red"
@@ -139,23 +139,26 @@ const Cart = ({ error, products }) => {
   };
 
   const TotalPrice = () => {
+    console.log("length: ", products.length);
     return (
       <div
         className="container"
         style={{ display: "flex", justifyContent: "space-between" }}
       >
-        <h5>total ₹ {price}</h5>
-        <button
-          onClick={() => {
-            let token = handleCheckout2();
-            console.log("token from payment:", token);
-          }}
-          // onClick={() => {
-          //   setCheckOutModalVisible(true);
-          // }}
-        >
-          Checkout
-        </button>
+        <h5>Total Rp. {price}</h5>
+        {products.length != 0 && (
+          <button
+            onClick={() => {
+              let token = handleCheckout2();
+              console.log("token from payment:", token);
+            }}
+            // onClick={() => {
+            //   setCheckOutModalVisible(true);
+            // }}
+          >
+            Checkout
+          </button>
+        )}
         {/* {checkOutModalVisible && <CheckOutModal />} */}
         {/* {products.length != 0 && ( */}
         {/*   <StripeCheckout */}

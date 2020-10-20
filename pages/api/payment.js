@@ -28,14 +28,14 @@ export default async (req, res) => {
   }
 
   try {
-    // const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
-    // const cart = await Cart.findOne({ user: userId }).populate(
-    //   "products.product"
-    // );
-    // let price = 0;
-    // cart.products.forEach((item) => {
-    //   price = price + item.quantity * item.product.price;
-    // });
+    const { userId } = jwt.verify(authorization, process.env.JWT_SECRET);
+    const cart = await Cart.findOne({ user: userId }).populate(
+      "products.product"
+    );
+    let price = 0;
+    cart.products.forEach((item) => {
+      price = price + item.quantity * item.product.price;
+    });
     // const prevCustomer = await stripe.customers.list({
     //   email: paymentInfo.email,
     // });
@@ -50,8 +50,8 @@ export default async (req, res) => {
 
     let parameter = {
       transaction_details: {
-        order_id: "test-transaction-123",
-        gross_amount: 200000,
+        order_id: uuidV4(),
+        gross_amount: price,
       },
       credit_card: {
         secure: true,
@@ -63,12 +63,10 @@ export default async (req, res) => {
       // transaction token
       let transactionToken = transaction.token;
       console.log("transactionToken:", transactionToken);
-      res
-        .status(200)
-        .json({
-          message: "payment was successful",
-          snapToken: transactionToken,
-        });
+      res.status(200).json({
+        message: "payment was successful",
+        snapToken: transactionToken,
+      });
     });
 
     // await stripe.charges.create(
